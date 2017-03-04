@@ -23,11 +23,11 @@ var huffArrStore;
 function displayTree(){
 
   //Display the output to html
-  var output = "";
+  var output = "Calculation : <br>";
 
   for (huffarrItr of huffArrStore) {
     for (huffEle of huffarrItr) {
-      output += huffEle.probability + " ";
+      output += huffEle.probability + "&nbsp;&nbsp;&nbsp;";
     }
     output += "<br>"
   }
@@ -39,7 +39,7 @@ function displayTree(){
 function calcCode(){
 
   //todo [parse the tree]
-  var codes = "";
+  var codes = "Codes : <br>";
 
   for(var huffEle of huffArrStore[0]){
       var curCodeName = huffEle.name;
@@ -61,8 +61,16 @@ function calcCode(){
 
 }
 
-function mainCall() {
+function testProbability(){
+  var sum = 0;
+  for(huffEle of huffArr){
+    sum+= huffEle;
+  }
+  console.log(sum);
+  return sum;
+}
 
+function huffLogic(){
   //Get input String
   var huffString = document.getElementById("huffString").value;
 
@@ -73,6 +81,13 @@ function mainCall() {
   //Split string to array
   huffArr = huffString.split(",").map(Number);
   var j = huffArrStore.length;
+
+  if(testProbability() != 100){
+    var err_message = "Probabilites don't add up to 100";
+    document.getElementById('output').innerHTML = err_message;
+    document.getElementById('codes').innerHTML = "";
+    return;
+  }
 
   //Store first array to the Array-Store
   huffArrStore[0] = [];
@@ -114,6 +129,8 @@ function mainCall() {
       huffArrStore[j-1][huffArrStore[j-1].length-2].probability
       + huffArrStore[j-1][huffArrStore[j-1].length-1].probability
     );
+
+    Math.round(calcProb * 100) / 100;
 
     console.log("calcProb : " + calcProb);
 
@@ -157,5 +174,10 @@ function mainCall() {
 
   displayTree();
   calcCode();
+}
+
+function mainCall() {
+
+  huffLogic();
 
 }//End of mainCall()
