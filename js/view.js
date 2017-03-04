@@ -39,6 +39,26 @@ function displayTree(){
 function calcCode(){
 
   //todo [parse the tree]
+  var codes = "";
+
+  for(var huffEle of huffArrStore[0]){
+      var curCodeName = huffEle.name;
+      codes += curCodeName + " : ";
+      for(var i = huffArrStore.length-1; i>=0; i--){
+        for(var j=0; j<huffArrStore[i].length; j++){
+          if((huffArrStore[i][j].name).includes(curCodeName)){
+            if(huffArrStore[i][j].value != -1){
+              codes += huffArrStore[i][j].value;
+              break;  //Logical Break (Not required)
+            }
+          }
+        }
+      }
+      codes += "<br>";
+  }
+
+  document.getElementById("codes").innerHTML = codes;
+
 }
 
 function mainCall() {
@@ -65,6 +85,14 @@ function mainCall() {
     huffArrStore[0][i] = huffobj;
   }
 
+  huffArr.sort();
+  huffArr.reverse();
+
+  //Sort Array in descending order
+  huffArrStore[0].sort(function(a, b) {
+  return b.probability - a.probability;
+  });
+
   //Assign values of 0 and 1 to last two elements
   huffArrStore[j][huffArrStore[j].length-2].value=0;
   huffArrStore[j][huffArrStore[j].length-1].value=1;
@@ -87,15 +115,20 @@ function mainCall() {
       + huffArrStore[j-1][huffArrStore[j-1].length-1].probability
     );
 
+    console.log("calcProb : " + calcProb);
+
     var calcName = (
-      huffArrStore[j-1][l-2].name + huffArrStore[j-1][l-1].name
+      huffArrStore[j-1][huffArrStore[j-1].length-2].name
+      + huffArrStore[j-1][huffArrStore[j-1].length-1].name
     );
+
+    console.log("Name : " + calcName);
 
     //console.log(j);
     for(var i=0; i < huffArr.length; i++){
        var huffobj = new huffClass(
-        huffArr[i],
-        'x' + i,
+        huffArrStore[j-1][i].probability,
+        huffArrStore[j-1][i].name,
         -1
       );
       huffArrStore[j][i] = huffobj;
@@ -103,6 +136,14 @@ function mainCall() {
 
     huffArrStore[j][huffArrStore[j].length-1].probability = calcProb;
     huffArrStore[j][huffArrStore[j].length-1].name = calcName;
+
+    //Sort the Array
+    huffArrStore[j].sort(function(a, b) {
+    return b.probability - a.probability;
+    });
+
+    huffArr.sort();
+    huffArr.reverse();
 
     if(huffArrStore[j].length!=1){
       huffArrStore[j][huffArrStore[j].length-2].value=0;
@@ -115,5 +156,6 @@ function mainCall() {
   console.log(huffArrStore);
 
   displayTree();
+  calcCode();
 
 }//End of mainCall()
