@@ -47,12 +47,56 @@ button {
     margin: 10px;
 }
 
+button:hover{
+  background-color: #3B9E40;
+}
+
 .outputBox{
   padding: 20px;
-  width: 50%;
-  margin: auto;
 }
 
 p{
+  padding: 20px;
+}
+
+.column{
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  margin-left: 10px;
+}
+
+.cell{
+  border-radius: 5px;
+  font-weight: 400;
+  font-size: 1.2em;
+  display: block;
+  padding: 10px;
+  margin-bottom: 5px;
+  background: #e9e9e9;
+}
+
+.cell-head{
+  border-radius: 5px;
+  font-weight: 400;
+  font-size: 1.2em;
+  display: block;
+  padding: 10px;
+  margin-bottom: 5px;
+  background: #c9c9c9;
+}
+
+#codes{
+  clear: both;
+}
+
+#output{
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+
+.heading{
+  font-weight: 300;
+  font-size: 1.2em;
   padding: 20px;
 }
